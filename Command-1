@@ -1,0 +1,76 @@
+db.posts.insert({
+    title: 'Post One',
+    body: 'body of the Post One',
+    category: 'News',
+    likes: 4,
+    tags:['news','events'],
+    user: {
+        name: 'John Doe',
+        status: 'author'
+    },
+    date: Date(),
+})
+
+db.posts.insertMany(
+    [{
+    title: 'Post One',
+    body: 'body of the Post One',
+    category: 'News',
+    likes: 4,
+    tags:['news','events'],
+    date: Date(),
+    },
+    {
+    title: 'Post Two',
+    body: 'body of the Post Two',
+    category: 'Novels',
+    tags:['news','events'],
+    date: Date(),
+    },
+    {
+    title: 'Post Three',
+    body: 'body of the Post Three',
+    tags:['news','events'],
+    date: Date(),
+    },]
+)
+
+
+db.posts.update({ title: 'Post One' },
+    {
+        $set:{
+            comments:[
+                {
+                    users: 'Chris',
+                    body: 'Comment One',
+                    date: Date()
+                },
+                {
+                    user: 'Harry White',
+                    body: 'Comment Two',
+                    date: Date()
+                }
+            ]
+        }
+    },
+    
+)
+
+db.posts.find({
+    comments:{
+        $elemMatch:{
+            user: 'Harry White'
+        }    
+    }
+})
+
+
+db.posts.find({
+    $text: {
+        $search: "\"Post O\""
+    }
+}).pretty()
+
+db.posts.find({ likes: { $gt: 3 }}).pretty()
+
+exit
